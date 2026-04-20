@@ -99,6 +99,17 @@ html, body {
   min-width: 180px;
 }
 
+.filter-group input {
+  padding: 8px 14px;
+  font-size: 0.95em;
+  font-family: 'Lato', sans-serif;
+  background-color: #2A2A2A;
+  color: #EEE;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  min-width: 180px;
+}
+
 /* ── Card Grid ── */
 #card-container {
   display: grid;

@@ -302,9 +302,9 @@ function editCardContent(card, newTitle, newImageURL) {
 
 let activeDifficulty = "all";
 let activeOccasion = "all";
-
 let favorites = [];
 let showOnlyFavorites = false;
+let searchTerm = "";
 
 // Feature 1: Filter fabrics
 // This function filters the fabrics by difficulty or occasion and re-renders the cards.
@@ -322,7 +322,12 @@ function getFilteredFabrics() {
 
     const passesFavorites = !showOnlyFavorites || favorites.includes(fabric.id);
 
-    return passesDifficulty && passesOccasion && passesFavorites;
+    const passesSearch = !searchTerm ||
+      fabric.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      fabric.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      fabric.origin.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return passesDifficulty && passesOccasion && passesFavorites && passesSearch;
   });
 }
 
@@ -343,6 +348,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.getElementById("occasion-filter").addEventListener("change", function() {
     activeOccasion = this.value;
+    showCards();
+  });
+
+  document.getElementById("search-input").addEventListener("input", function() {
+    searchTerm = this.value.trim();
     showCards();
   });
 
