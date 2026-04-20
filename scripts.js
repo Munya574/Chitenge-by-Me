@@ -275,12 +275,36 @@ function editCardContent(card, newTitle, newImageURL) {
   cardBeginnerTip.textContent = "Beginner Tip: " + fabric.beginnerTip;
 
   const favBtn = card.querySelector(".favorite-btn");
+  favBtn.addEventListener("click", function() {
+    const fabric = fabrics.find(f => f.name === newTitle);
+    const index = favorites.indexOf(fabric.id);
+    if (index > -1) {
+      favorites.splice(index, 1);
+      this.classList.remove("saved");
+    } else {
+      favorites.push(fabric.id);
+      this.classList.add("saved");
+    }
+    // Re-render if showing only favorites to update the list
+    if (showOnlyFavorites) {
+      showCards();
+    }
+  });
+
+  // Set initial favorite state
+  if (favorites.includes(fabric.id)) {
+    favBtn.classList.add("saved");
+  } else {
+    favBtn.classList.remove("saved");
+  }
 }
 
 
 let activeDifficulty = "all";
 let activeOccasion = "all";
+
 let favorites = [];
+let showOnlyFavorites = false;
 
 // Feature 1: Filter fabrics
 // This function filters the fabrics by difficulty or occasion and re-renders the cards.
@@ -296,7 +320,9 @@ function getFilteredFabrics() {
       activeOccasion === "all" ||
       fabric.occasion.some(o => o.toLowerCase() === activeOccasion);
 
-    return passesDifficulty && passesOccasion;
+    const passesFavorites = !showOnlyFavorites || favorites.includes(fabric.id);
+
+    return passesDifficulty && passesOccasion && passesFavorites;
   });
 }
 
@@ -317,6 +343,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.getElementById("occasion-filter").addEventListener("change", function() {
     activeOccasion = this.value;
+    showCards();
+  });
+
+  document.getElementById("favorites-toggle").addEventListener("click", function() {
+    showOnlyFavorites = !showOnlyFavorites;
+    this.classList.toggle("active");
     showCards();
   });
 });
