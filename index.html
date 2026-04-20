@@ -1,31 +1,62 @@
 <!doctype html>
 <html>
   <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
+    <title>Chitenge by Me | African Fabrics Catalog</title>
+    <meta name="description" content="SomeAfrican inspiration for beginner sewists!" />
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
   </head>
 
   <body>
     <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
+      <h1 class="title">Chitenge by Me</h1>
+      <p class="subtitle">Roots through fabric</p>
     </header>
-    <div id="card-container"></div>
-    <div class="card" style="display: none">
-      <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
-        <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
-        </ul>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label for="difficulty-filter">Difficulty</label>
+        <select id="difficulty-filter">
+          <option value="all">All Levels</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="occasion-filter">Occasion</label>
+        <select id="occasion-filter">
+          <option value="all">All Occasions</option>
+          <option value="casual">Casual</option>
+          <option value="formal">Formal</option>
+          <option value="wedding">Wedding</option>
+          <option value="funeral">Funeral</option>
+        </select>
+      </div>
+      <div class="filter-group favorites-group">
+        <label>&nbsp;</label>
+        <button id="favorites-toggle">♡ Show Favorites</button>
       </div>
     </div>
-    <div class="footer">
-      <button onclick="quoteAlert()">Get A Quote!</button>
-      <button onclick="removeLastCard()">Remove A Card!</button>
+
+    <div id="card-container"></div>
+
+    <div class="card" style="display: none">
+      <div class="card-content">
+        <h2>Fabric Name</h2>
+        <p class="origin">Origin</p>
+        <p class="description">Description</p>
+        <ul>
+          <li>Difficulty: </li>
+          <li>Occasions: </li>
+          <li>Tips: </li>
+        </ul>
+        <button class="favorite-btn">♡ Save</button>
+      </div>
     </div>
+
+    <footer class="footer">
+      <p>Embracing Africanasity</p>
+    </footer>
   </body>
 </html>
