@@ -208,15 +208,18 @@ const fabrics = [
 // Your final submission should have much more data than this, and
 // you should use more than just an array of strings to store it all.
 
-// This function adds cards the page to display the data in the array
+// Adding cards to the page to display the data in the array
 function showCards() {
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
   const templateCard = document.querySelector(".card");
 
-  for (let i = 0; i < fabrics.length; i++) {
-    let title = fabrics[i].name;
-    let imageURL = fabrics[i].imageURL;
+  const filteredFabrics = getFilteredFabrics();
+
+  for (let i = 0; i < filteredFabrics.length; i++) {
+    let fabric = filteredFabrics[i];
+    let title = fabric.name;
+    let imageURL = fabric.imageURL;
 
     // This part of the code doesn't scale very well! After you add your
     // own data, you'll need to do something totally different here.
@@ -271,13 +274,50 @@ function editCardContent(card, newTitle, newImageURL) {
   const cardBeginnerTip = card.querySelector(".beginner-tip");
   cardBeginnerTip.textContent = "Beginner Tip: " + fabric.beginnerTip;
 
+  const favBtn = card.querySelector(".favorite-btn");
+}
+
+
+let activeDifficulty = "all";
+let activeOccasion = "all";
+let favorites = [];
+
+// Feature 1: Filter fabrics
+// This function filters the fabrics by difficulty or occasion and re-renders the cards.
+
+function getFilteredFabrics() {
+  return fabrics.filter(function(fabric) {
+
+    const passesDifficulty =
+      activeDifficulty === "all" ||
+      fabric.difficulty.toLowerCase() === activeDifficulty;
+
+    const passesOccasion =
+      activeOccasion === "all" ||
+      fabric.occasion.some(o => o.toLowerCase() === activeOccasion);
+
+    return passesDifficulty && passesOccasion;
+  });
+}
 
   // You can use console.log to help you debug!
   // View the output by right clicking on your website,
   // select "Inspect", then click on the "Console" tab
-  console.log("new card:", newTitle, "- html: ", card);
-}
 
-// This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+
+// This calls the showCards() function when the page is first loaded
+document.addEventListener("DOMContentLoaded", function() {
+  showCards();
+
+  // Adding event listeners for filters
+  document.getElementById("difficulty-filter").addEventListener("change", function() {
+    activeDifficulty = this.value;
+    showCards();
+  });
+
+  document.getElementById("occasion-filter").addEventListener("change", function() {
+    activeOccasion = this.value;
+    showCards();
+  });
+});
 
